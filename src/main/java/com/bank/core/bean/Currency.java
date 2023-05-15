@@ -1,5 +1,7 @@
 package com.bank.core.bean;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Currency {
-
-	private String country;
-	private String currencyName;
-	private String charCode;
-	private String numericCode;
+	
+	@Id
+	private int id;
+	private String name;
+	private String code;
 }

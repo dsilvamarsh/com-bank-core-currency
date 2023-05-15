@@ -1,12 +1,13 @@
 package com.bank.core.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.core.bean.Currency;
+import com.bank.core.repository.CurrencyRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,16 +15,17 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@EnableJdbcRepositories(basePackages = {"com.bank.core.repository"})
 public class CurrencyController {
 
-	@GetMapping("/currency/{code}")
-	public ResponseEntity<Currency> findCurrency(@PathVariable String code){
+	
+	@Autowired
+	private CurrencyRepository repo;
+	@GetMapping("/currency/{id}")
+	public Currency findCurrency(@PathVariable int id){
 		//log.debug("inside logging");
-		log.debug("Inside controller fetching currency details for "+code);
-		return ResponseEntity.status(HttpStatus.OK).body(Currency.builder().currencyName("United Kingdom")
-				.charCode("GBP")
-				.currencyName("Great Britan Pound").build());
-		
+		log.debug("Inside controller fetching currency details for "+id);
+		return repo.findById(id).get();
 		
 	}
 	
